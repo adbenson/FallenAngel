@@ -2,6 +2,8 @@
 #include "buttons.h"
 #include "light_mode.h"
 #include "chase_mode.h"
+#include "fire_mode.h"
+
 #include <Adafruit_NeoPixel.h>
 
 // CONSTANTS
@@ -50,7 +52,7 @@ void setup() {
   leftWing = new Adafruit_NeoPixel(144, LEFT_WING_OUT, NEO_GRBW + NEO_KHZ800);
   rightWing = new Adafruit_NeoPixel(144, RIGHT_WING_OUT, NEO_GRBW + NEO_KHZ800);
 
-  mode = new ChaseMode(144);
+  mode = new FireMode(144);
 
   leftWing->begin();
   rightWing->begin();
@@ -83,8 +85,8 @@ void updateLights(int wingPosition) {
     
   mode->step();
 
-  mode->display(leftWing);
-  mode->display(rightWing);
+  mode->display(leftWing, 0);
+  mode->display(rightWing, 1);
 
   leftWing->setBrightness(brightness);
   rightWing->setBrightness(brightness);

@@ -10,7 +10,7 @@ class LightMode {
     
     virtual void step() = 0;
 
-    virtual void display(Adafruit_NeoPixel* strip) = 0;
+    virtual void display(Adafruit_NeoPixel* strip, int meta) = 0;
 
     static uint32_t rgb(uint8_t r, uint8_t g, uint8_t b);
     

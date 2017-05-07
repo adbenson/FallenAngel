@@ -3,7 +3,7 @@
 
 #include "Arduino.h"
 
-#define DEBUG false
+#define DEBUG true
 
 // PINS
 #define WING_SPEED        3
@@ -35,8 +35,6 @@ class Wings {
     int wingDirection;
     int wingSpeed;
     int position;
-
-    int maxSpeed;
 
     void move(int direction);
 

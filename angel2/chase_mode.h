@@ -9,7 +9,7 @@ class ChaseMode : public LightMode {
     ChaseMode(int maxPixels);
 
     void step();
-    void display(Adafruit_NeoPixel* pixels);
+    void display(Adafruit_NeoPixel* pixels, int meta);
 
   private:
     int chaseState;

@@ -11,8 +11,6 @@ Wings::Wings(int speedPin, int dirPin, int positionPin) {
 
   positionIn = positionPin;
 
-  maxSpeed = 255;
-
   stop();
 
   if (DEBUG) {
@@ -29,10 +27,11 @@ void Wings::down() {
 }
 
 void Wings::stop() {
-  if (wingDirection >= 0) {
-    wingDirection = -1;
-    wingSpeed = 0;
-    digitalWrite(speedOut, LOW);
+  if (wingSpeed > 0) {
+    wingSpeed -= 32;
+    wingSpeed = constrain(wingSpeed, 0, 255);
+  
+    digitalWrite(speedOut, wingSpeed);
   
     if (DEBUG) {
       Serial.println("wings stopped");
@@ -52,6 +51,16 @@ void Wings::move(int direction) {
   wingDirection = direction;
 
   wingSpeed += 32;
+
+  int maxSpeed;
+  if (direction == WINGS_UP) {
+    maxSpeed = map(position, 1024, 640, 32, 255);
+  } else {
+    maxSpeed = map(position, 0, 256, 32, 255);
+  }
+
+  maxSpeed = constrain(maxSpeed, 32, 255);
+
   wingSpeed = constrain(wingSpeed, 16, maxSpeed);
 
   digitalWrite(directionOut, direction);

@@ -13,7 +13,7 @@ void ChaseMode::step() {
   }
 }
 
-void ChaseMode::display(Adafruit_NeoPixel* pixels) {
+void ChaseMode::display(Adafruit_NeoPixel* pixels, int meta) {
 
   int n = pixels->numPixels();
   
