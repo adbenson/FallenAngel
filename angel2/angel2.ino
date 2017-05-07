@@ -4,6 +4,10 @@
 #include "chase_mode.h"
 #include <Adafruit_NeoPixel.h>
 
+// CONSTANTS
+
+#define DELAY 10
+
 // I/O PINS
 
 #define BUTTON_POWER      22 //A
@@ -11,12 +15,17 @@
 #define BUTTON_MODE       24 //C
 #define BUTTON_DOWN       25 //D
 
-#define WING_SPEED        3
-#define WING_DIR          2
+#define WING_SPEED_OUT    3
+#define WING_DIR_OUT      2
 
 #define HALO_OUT          30
 #define LEFT_WING_OUT     28
 #define RIGHT_WING_OUT    26
+
+#define WING_POSITION_IN  A0
+
+#define AUDIO_ENVELOPE_IN A1
+#define AUDIO_IN          A2
 
 
 //Gloabls
@@ -28,11 +37,13 @@ Adafruit_NeoPixel* rightWing;
 
 LightMode* mode;
 
+bool lightsOn = true;
+
 void setup() {
   Serial.begin(9600);
   Serial.println("Setup begin");
 
-  wings = new Wings(WING_SPEED, WING_DIR);
+  wings = new Wings(WING_SPEED_OUT, WING_DIR_OUT, WING_POSITION_IN);
   
   buttons = new Buttons(BUTTON_POWER, BUTTON_MODE, BUTTON_UP, BUTTON_DOWN);
 
@@ -60,24 +71,48 @@ void moveWings() {
     }
 }
 
-void loop() {
-  Serial.println("Loop start");
+void blankLights() {
+  leftWing->setBrightness(0);
+  rightWing->setBrightness(0);
+  leftWing->show();
+  rightWing->show();
+}
 
-  buttons->update();
-
-  if(buttons->isPressed(buttons->POWER)) Serial.println("power is pressed");
-  if(buttons->wasPressed(buttons->POWER)) Serial.println("power was pressed");
-
-  moveWings();
-
+void updateLights(int wingPosition) {
+  int brightness = wingPosition / 4;
+    
   mode->step();
 
   mode->display(leftWing);
   mode->display(rightWing);
 
+  leftWing->setBrightness(brightness);
+  rightWing->setBrightness(brightness);
+
   leftWing->show();
   rightWing->show();
+}
 
-  delay(100);
+void loop() {
+  // Serial.println("Loop start");
+
+  buttons->update();
+
+  int wingPosition = wings->updatePosition();
+  moveWings();
+
+  if (buttons->wasPressed(buttons->POWER)) {
+    lightsOn = !lightsOn;
+
+    if (!lightsOn) {
+        blankLights();
+    }
+  }
+
+  if (lightsOn) {
+    updateLights(wingPosition);
+  }
+
+  delay(DELAY);
 }
 

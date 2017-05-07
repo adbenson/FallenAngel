@@ -1,13 +1,17 @@
 #include "Arduino.h"
 #include "wings.h"
 
-Wings::Wings(int speedPin, int dirPin) {
+Wings::Wings(int speedPin, int dirPin, int positionPin) {
       
   pinMode(speedPin, OUTPUT);
   pinMode(dirPin, OUTPUT);
 
   speedOut = speedPin;
   directionOut = dirPin;
+
+  positionIn = positionPin;
+
+  maxSpeed = 255;
 
   stop();
 
@@ -36,11 +40,19 @@ void Wings::stop() {
   }
 }
 
+int Wings::updatePosition() {
+  int reading = analogRead(positionIn);
+  int mapped = map(reading, POSITION_MIN, POSITION_MAX, 0, 1023);
+  position = constrain(mapped, 0, 1023);
+  
+  return position;
+}
+
 void Wings::move(int direction) {
   wingDirection = direction;
 
-  wingSpeed += 16;
-  wingSpeed = constrain(wingSpeed, 16, 255);
+  wingSpeed += 32;
+  wingSpeed = constrain(wingSpeed, 16, maxSpeed);
 
   digitalWrite(directionOut, direction);
   analogWrite(speedOut, wingSpeed);
