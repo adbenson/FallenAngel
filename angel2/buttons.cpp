@@ -47,7 +47,7 @@ boolean Buttons::isPressed(int button) {
 
 boolean Buttons::wasPressed(int button) {
   //Only return true once for each press, and only after it has been pressed for at least one cycle.
-  boolean pressed = buttonHistory[button][0] && buttonHistory[button][1] && !buttonHistory[button][2]; 
+  boolean pressed = buttonHistory[button][0] && !buttonHistory[button][1];// && !buttonHistory[button][2]; 
 
   return pressed;
 }

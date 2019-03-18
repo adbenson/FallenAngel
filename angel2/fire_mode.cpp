@@ -53,16 +53,17 @@ void FireMode::display(Adafruit_NeoPixel* pixels, int wing) {
     int level = levels[i];
 
     float factor = (float)level / MAX;
-    int r = 235 * factor;
+    int r = 255 * factor;
     int g = 255 * factor * factor;
     int b = 50 * factor * factor;
+    int w = (factor > 0.5 && random(0, 30) == 0) ? 255 : 0;
     
     uint32_t color; 
     
-    if (wing == 1) {
-      color = rgbw(r, g, b, r);
+    if (wing == 0x) {
+      color = rgbw(r, g / 2, b, w);
     } else {
-      color = rgbw(b, g, r, r);
+      color = rgbw(b, g, r, w);
     }
     
     pixels->setPixelColor(i, color);

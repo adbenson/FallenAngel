@@ -6,6 +6,10 @@ LightMode::LightMode(int maxPixels) {
   lastPixel = maxPixels - 1;
 }
 
+void LightMode::display(Adafruit_NeoPixel* strip) {
+    display(strip, 0);
+}
+    
 uint32_t LightMode::rgb(uint8_t r, uint8_t g, uint8_t b) {
   return ((uint32_t)r << 16) | ((uint32_t)g << 8) | b;
 }

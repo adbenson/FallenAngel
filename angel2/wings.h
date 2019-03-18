@@ -14,8 +14,8 @@
 #define WINGS_UP    LOW
 #define WINGS_DOWN  HIGH
 
-#define POSITION_MIN 40
-#define POSITION_MAX 950
+#define POSITION_MIN 140
+#define POSITION_MAX 900
 
 class Wings {
   public:
@@ -24,6 +24,8 @@ class Wings {
     void up();
     void down();
     void stop();
+
+    void step();
 
     int updatePosition();
 
@@ -36,7 +38,10 @@ class Wings {
     int wingSpeed;
     int position;
 
+    int unmovedCount;
+
     void move(int direction);
+    bool moving();
 
 };
 
