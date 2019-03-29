@@ -18,8 +18,8 @@
 #define BUTTON_MODE       24 //C
 #define BUTTON_DOWN       25 //D
 
-#define WING_SPEED_OUT    3
-#define WING_DIR_OUT      2
+#define PIN_WING_SPEED_OUT    3
+#define PIN_WING_DIR_OUT      2
 
 #define ACCESSORY_OUT     30
 #define LEFT_WING_OUT     28
@@ -51,7 +51,7 @@ void setup() {
   Serial.begin(9600);
   Serial.println("Setup begin");
 
-  wings = new Wings(WING_SPEED_OUT, WING_DIR_OUT, WING_POSITION_IN);
+  wings = new Wings(PIN_WING_SPEED_OUT, PIN_WING_DIR_OUT, WING_POSITION_IN);
   
   buttons = new Buttons(BUTTON_POWER, BUTTON_MODE, BUTTON_UP, BUTTON_DOWN);
 
