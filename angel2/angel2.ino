@@ -1,9 +1,11 @@
 #include "wings.h"
 #include "buttons.h"
+#include "display.h"
 #include "light_mode.h"
 #include "chase_mode.h"
 #include "fire_mode.h"
 #include "glow_mode.h"
+#include "rainbow_mode.h"
 
 #include <Adafruit_NeoPixel.h>
 
@@ -27,8 +29,8 @@
 
 #define WING_POSITION_IN  A0
 
-#define AUDIO_ENVELOPE_IN A1
-#define AUDIO_IN          A2
+#define AUDIO_ENVELOPE_INPUT A1
+#define AUDIO_INPUT          A2
 
 
 //Gloabls
@@ -45,10 +47,12 @@ GlowMode* accGlow;
 LightMode* wingMode;
 LightMode* accessoryMode;
 
+Display* display;
+
 bool lightsOn = true;
 
 void setup() {
-  Serial.begin(9600);
+  Serial.begin(19200);
   Serial.println("Setup begin");
 
   wings = new Wings(PIN_WING_SPEED_OUT, PIN_WING_DIR_OUT, WING_POSITION_IN);
@@ -59,11 +63,15 @@ void setup() {
   rightWing = new Adafruit_NeoPixel(144, RIGHT_WING_OUT, NEO_GRBW + NEO_KHZ800);
   accessory = new Adafruit_NeoPixel(60, ACCESSORY_OUT, NEO_GRB + NEO_KHZ800);
 
-  wingMode = new FireMode(144);
-  accessoryMode = new FireMode(60);
+  wingMode = new RainbowMode(144);
+  accessoryMode = new RainbowMode(60);
 
   wingGlow = new GlowMode(144);
   accGlow = new GlowMode(60);
+
+  display = new Display();
+
+  display->init();
 
   leftWing->begin();
   rightWing->begin();
@@ -104,16 +112,19 @@ void updateLights(int wingPosition) {
   rightWing->setBrightness(brightness);
   accessory->setBrightness(brightness);
 
+  accessoryMode->step();
+  accessoryMode->display(accessory, 0);
+
   if (buttons->isPressed(buttons->MODE)) {
-    glow->step();
+     wingGlow->step();
      
     wingMode->display(leftWing, 0);
-    wingMode->display(rightWing, 1);
+    wingMode->display(rightWing, 0);
   } else {
     wingMode->step();
 
     wingMode->display(leftWing, 0);
-    wingMode->display(rightWing, 1);
+    wingMode->display(rightWing, 0);
   }
 
   leftWing->show();
@@ -141,6 +152,7 @@ void loop() {
     updateLights(wingPosition);
   }
 
+  display->beepBoop();
+
   delay(DELAY);
 }
-

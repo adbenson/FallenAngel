@@ -1,5 +1,8 @@
 #include "Arduino.h"
 #include "wings.h"
+#include "display.h"
+
+extern Display* display;
 
 Wings::Wings(int speedPin, int dirPin, int positionPin) {
       
@@ -45,7 +48,8 @@ void Wings::stop() {
 
 int Wings::updatePosition() {
   int reading = analogRead(positionIn);
-Serial.println(reading);
+  display->number(reading);
+
   int mapped = map(reading, POSITION_MIN, POSITION_MAX, 0, 1023);
   int newPosition = constrain(mapped, 0, 1023);
 
@@ -83,7 +87,7 @@ void Wings::move(int direction) {
 
 void Wings::step() {
   if (moving()) {
-    if (unmovedCount > 6) {
+    if (unmovedCount > 10) {
       if (DEBUG) {
         Serial.println("Wings stalled");
         Serial.print("Wing speed: "); Serial.println(wingSpeed);
@@ -93,18 +97,24 @@ void Wings::step() {
       return;
     }
 
-    wingSpeed += 32;
+    // Serial.println(position);
   
-    int maxSpeed;
-    if (wingDirection == WINGS_UP) {
-      maxSpeed = map(position, 1024, 640, 32, 255);
+    if ((wingDirection == WINGS_UP && position > 768) || wingDirection == WINGS_DOWN && position < 256)  {
+      wingSpeed -= 32;
     } else {
-      maxSpeed = map(position, 0, 256, 32, 255);
+      wingSpeed += 32;
     }
 
-    maxSpeed = constrain(maxSpeed, 32, 255);
+    // int maxSpeed;
+    // if (wingDirection == WINGS_UP) {
+    //   maxSpeed = map(position, 1023, 767, 32, 255);
+    // } else {
+    //   maxSpeed = map(position, 0, 255, 32, 255);
+    // }
+
+    // maxSpeed = constrain(maxSpeed, 32, 255);
   
-    wingSpeed = constrain(wingSpeed, 16, maxSpeed);
+    wingSpeed = constrain(wingSpeed, 32, 255);
   
     digitalWrite(directionOut, wingDirection);
     analogWrite(speedOut, wingSpeed);

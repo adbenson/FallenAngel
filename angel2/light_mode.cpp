@@ -50,7 +50,6 @@ uint32_t LightMode::white(uint32_t color) {
   return (color >> 24) & 255;
 }
 
-
-
-
-
+uint32_t LightMode::setWhite(uint32_t color, uint8_t w) {
+  return color | ((uint32_t)w << 24);
+}

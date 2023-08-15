@@ -21,6 +21,7 @@ class LightMode {
     uint32_t LightMode::green(uint32_t color);
     uint32_t LightMode::blue(uint32_t color);
     uint32_t LightMode::white(uint32_t color);
+    uint32_t LightMode::setWhite(uint32_t color, byte w);
 
   protected:
     int numPixels;

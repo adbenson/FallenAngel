@@ -1,7 +1,7 @@
 #include "Arduino.h"
-#include "fire_mode.h"
+#include "rainbow_mode.h"
 
-FireMode::FireMode(int maxPixels) : LightMode(maxPixels) {
+RainbowMode::RainbowMode(int maxPixels) : LightMode(maxPixels) {
 
   levels = new int[maxPixels];
   goals = new int[maxPixels];
@@ -11,15 +11,15 @@ FireMode::FireMode(int maxPixels) : LightMode(maxPixels) {
     goals[i] = MAX;
   }
 
-  rise = 0.15 * MAX;
-  fall = 0.12 * MAX;
+  rise = 0.05 * MAX;
+  fall = 0.02 * MAX;
   dropoff = 0.25 * MAX;
   minLevel = 0.15 * MAX;
   choose = 120;
 
 };
 
-void FireMode::step() {
+void RainbowMode::step() {
 
   for(int i = 0; i < numPixels; i++){
     int level = levels[i];
@@ -48,7 +48,7 @@ void FireMode::step() {
   }
 }
 
-void FireMode::display(Adafruit_NeoPixel* pixels, int wing) {
+void RainbowMode::display(Adafruit_NeoPixel* pixels, int wing) {
   for(int i = 0; i < numPixels; i++){
     int level = levels[i];
 
@@ -56,21 +56,16 @@ void FireMode::display(Adafruit_NeoPixel* pixels, int wing) {
     int r = 255 * factor;
     int g = 255 * factor * factor;
     int b = 50 * factor * factor;
-    int w = (factor > 0.5 && random(0, 10) == 0) ? 255 : 0;
+    int w = (factor < 0.25 && random(0, 20) == 0) ? 255 : 0;
     
-    uint32_t color; 
-    
-    if (wing == 0) {
-      color = rgbw(r, g / 2, b, w);
-    } else {
-      color = rgbw(b, g, r, w);
-    }
-    
+    uint32_t color = hue(factor * 255);
+    color = setWhite(color, w);
+
     pixels->setPixelColor(i, color);
   }
 }
 
-void FireMode::pullAdjacent(int i, int pull) {
+void RainbowMode::pullAdjacent(int i, int pull) {
   i = ((i<0)? lastPixel : i);
   i = (i>lastPixel)? 0 : i;
 
