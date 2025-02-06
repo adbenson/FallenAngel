@@ -35,5 +35,5 @@ The hardware has held up suspiciously well after a few early failures. I may rev
 Arguably the greatest accomplishment of the whole project is the power supply. I need to be able to safely - and portably - deliver up to 15v at 15A.
 For safety margin, the power supply was designed to deliver 30A continuously, that's 360 fricking watts strapped to my back!
 And it needs to do this for several hours at a time - I planned for 4-6 hours of continuous usage (depending on how often I actuate the wings).
-The battery is a model aircraft battery as these are designed for very high current output. These are designed without protection (to increase the odds of a safe landing) so I added a Battery Management System (BMS) that protects against under-and-over voltage and over current, monitors the temperature, balances the cells, and even makes it easy to charge (with a GIANT power brick).
+The battery is a model aircraft battery as these are designed for very high current output. They are made without protection circuits (to increase the odds of a safe landing) so I added a Battery Management System (BMS) that protects against under-and-over voltage and over current, monitors the temperature, balances the cells, and even makes it easy to charge (with a GIANT power brick).
 All that, and it's waterproof. Yeah, I'm proud of it!
