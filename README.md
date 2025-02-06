@@ -8,16 +8,20 @@ The hardware has held up suspiciously well after a few early failures. I may rev
 
 ## Design
 
-* Frame and armature made out of 1/2" PVC tubing. It's lightweight, and what it lacks in rigidity it makes up for in durability and workability.
-* 144 RGBW leds per wing, for a total of 1,152 individually controllable light-emitting elements.
-* 8 FOOT WINGSPAN fully open, collapses to just 2'4" wide
+* Frame and armature made out of 1/2" PVC tubing.
+  * PVC is lightweight, and what it lacks in rigidity it makes up for in durability and workability.
+  * Aluminum tube linkages
+  * The real magic sauce is the joints - By heating and flattening the ends of the pipe, you can get fairly smooth movement in one plane with nearly no unwanted lateral movement!
+* **144 RGBW leds** per wing, for a total of 1,152 individually controllable light-emitting elements.
+  * That's a theoretical maximum of 23A current draw, but that would be with all four colors and no resistance. Actual current draw rarely exceeds 10A.
+* **8 FOOT WINGSPAN** fully open, collapses to just 2'4" wide
 * Opens and closes in **less than 3 seconds**. This was a tough requirement but slow wings are so, so sad.
   * 12v 5A (60W!) high-speed linear actuator with 22 lbs (10 kgs) of force
   * Lights turn on as the wings open and vice-versa
   * Soft-start and soft-stop using feedback from 150mm linear 
 * Fully modular electronics - separate battery, controller, wing control, and light control modules.
   * All clear covers - I want to see the pretty wires!
-* New for 2024 - Waterproof electronics! No more fear of firey death in a rainstorm!
+* New for 2024 - **Waterproof electronics**! No more fear of firey death in a rainstorm!
   * Deutsch automotive connectors between modules
 * 77Wh power supply can run with typical use for 4-6 hours
 * Remote controlled with 4-button keyfob (power, up, down, light mode)
