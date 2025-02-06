@@ -24,6 +24,9 @@ The hardware has held up suspiciously well after a few early failures. I may rev
 * New for 2024 - **Waterproof electronics**! No more fear of firey death in a rainstorm!
   * Deutsch automotive connectors between modules
 * 77Wh power supply can run with typical use for 4-6 hours
+   * 3S 7000mAh LiPo model aircraft battery
+   * 30A Battery Management System
+   * Fun Fact: the battery is rated at 120C discharge, which would be 840 amps. Which would require wires as thick as my wrists. *sigh* Marketing.
 * Remote controlled with 4-button keyfob (power, up, down, light mode)
 * Hand-dyed synthetic feathers 'cause real feathers are a huge f*cking mess
 * Air-dry foam clay and acrylic paint for boney effect
